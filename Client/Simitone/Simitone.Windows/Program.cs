@@ -28,6 +28,8 @@ namespace Simitone.Windows
         [STAThread]
         static void Main(string[] args)
         {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            Directory.SetCurrentDirectory(baseDir);
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 
             OperatingSystem os = Environment.OSVersion;
