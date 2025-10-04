@@ -52,6 +52,8 @@ namespace Simitone.Windows
             bool jit = false;
             #region User resolution parmeters
 
+            FSOEnvironment.Args = string.Join(" ", args);
+
             foreach (var arg in args)
             {
                 if (arg[0] == '-')

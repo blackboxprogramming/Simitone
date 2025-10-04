@@ -181,6 +181,7 @@ namespace Simitone.Client.UI.Panels
             if (IDEHook.IDE != null) IDEHook.IDE.IDEBreakpointHit(vm, entity);
         }
 
+        public static bool ShowSimanticsExceptions = true;
         void vm_OnDialog(FSO.SimAntics.Model.VMDialogInfo info)
         {
             if (info != null && ((info.DialogID == LastDialogID && info.DialogID != 0 && info.Block))) return;
@@ -193,6 +194,9 @@ namespace Simitone.Client.UI.Panels
                 BlockingDialog = null;
             }
             if (info == null) return; //return if we're just clearing a dialog.
+
+            if (!ShowSimanticsExceptions && info.Title == "SimAntics Exception!")
+                return;
 
             var options = new UIAlertOptions
             {
