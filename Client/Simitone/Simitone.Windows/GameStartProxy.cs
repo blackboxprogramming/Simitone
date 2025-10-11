@@ -18,15 +18,9 @@ namespace Simitone.Windows
             GameFacade.DirectX = useDX;
             World.DirectX = useDX;
             SimitoneGame game = new SimitoneGame();
-            var form = (Form)Form.FromHandle(game.Window.Handle);
-            if (form != null) form.FormClosing += Form_FormClosing;
+
             game.Run();
             game.Dispose();
-        }
-
-        private static void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !(GameFacade.Screens.CurrentUIScreen?.CloseAttempt() ?? true);
         }
     }
 }

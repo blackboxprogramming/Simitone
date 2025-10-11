@@ -22,6 +22,7 @@ using FSO.Files;
 using FSO.SimAntics;
 using MSDFData;
 using FSO.LotView.Model;
+using Simitone.Client.UI.Panels;
 
 namespace Simitone.Client
 {
@@ -44,6 +45,7 @@ namespace Simitone.Client
             TargetElapsedTime = new TimeSpan(10000000 / GlobalSettings.Default.TargetRefreshRate);
             FSOEnvironment.RefreshRate = GlobalSettings.Default.TargetRefreshRate;
             FSOEnvironment.TexCompress = false;
+            UILotControl.ShowSimanticsExceptions = !FSOEnvironment.Args.Contains("nosimantics-exc");
 
             if (!FSOEnvironment.SoftwareKeyboard)
             {
@@ -58,6 +60,7 @@ namespace Simitone.Client
             this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
             Thread.CurrentThread.Name = "Game";
+
         }
 
         bool newChange = false;
@@ -267,10 +270,12 @@ namespace Simitone.Client
             // TODO: Unload any non ContentManager content here
         }
 
-        protected override void OnExiting(object sender, EventArgs args)
+
+        protected override void OnExiting(object sender, ExitingEventArgs args)
         {
             base.OnExiting(sender, args);
             GameThread.SetKilled();
+            args.Cancel = !(GameFacade.Screens.CurrentUIScreen?.CloseAttempt() ?? true);
         }
 
         /// <summary>

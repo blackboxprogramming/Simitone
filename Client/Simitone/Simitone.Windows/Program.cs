@@ -28,6 +28,8 @@ namespace Simitone.Windows
         [STAThread]
         static void Main(string[] args)
         {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            Directory.SetCurrentDirectory(baseDir);
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 
             OperatingSystem os = Environment.OSVersion;
@@ -45,11 +47,14 @@ namespace Simitone.Windows
             var useDX = !linux;
             var path = gameLocator.FindTheSims1();
 
+
             FSOEnvironment.Enable3D = false;
             bool ide = false;
             bool aa = false;
             bool jit = false;
             #region User resolution parmeters
+
+            FSOEnvironment.Args = string.Join(" ", args);
 
             foreach (var arg in args)
             {
@@ -91,6 +96,9 @@ namespace Simitone.Windows
                                 break;
                             case "nosound":
                                 FSOEnvironment.NoSound = true;
+                                break;
+                            case string s when s.StartsWith("path"): //The Sims path
+                                path = s.Length > 4 ? s.Substring(4).Trim('"').Replace('\\', '/') + "/" : path;
                                 break;
                         }
                     }
@@ -136,11 +144,6 @@ namespace Simitone.Windows
                 var start = new GameStartProxy();
                 start.Start(useDX);
             }
-        }
-
-        private static void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !(GameFacade.Screens.CurrentUIScreen?.CloseAttempt() ?? true);
         }
 
         private static System.Reflection.Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)

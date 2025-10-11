@@ -57,7 +57,7 @@ namespace Simitone.Client.UI.Panels
                 .With9Slice(25, 25, 0, 0);
             Add(OuterBg);
             OuterBg.X = 138;
-            OuterBg.Size = new Point(196, 50);
+            OuterBg.Size = new Vector2(196, 50);
             OuterBg.Width = OuterBg.Width;
 
             MouseEvent = OuterBg.ListenForMouse(OuterBg.GetBounds(), HandleMouseEvent);
@@ -67,7 +67,7 @@ namespace Simitone.Client.UI.Panels
             Add(InnerBg);
             InnerBg.X = 148;
             InnerBg.Y = 6;
-            InnerBg.Size = new Point(133, 38);
+            InnerBg.Size = new Vector2(133, 38);
 
             TimeLabel = new UILabel();
             TimeLabel.Alignment = TextAlignment.Middle | TextAlignment.Center;

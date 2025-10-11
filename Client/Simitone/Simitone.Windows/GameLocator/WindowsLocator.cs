@@ -59,8 +59,29 @@ namespace Simitone.Windows.GameLocator
                     }
                 }
             }
+            // Check for Steam Legacy Collection install
+            if (FindTheSimsLegacySteam() is string steamInstallDir) return steamInstallDir;
+
             // Fall back to the default install location if the other two checks fail
             return @"C:\Program Files (x86)\Maxis\The Sims\".Replace('\\', '/');
+        }
+
+        /// <summary>
+        /// Finds The Sims Legacy Collection installed via Steam
+        /// </summary>
+        /// <param name="steamAppId">Steam App ID, default is The Sims: Legacy Collection</param>
+        /// <returns>Full path if found, null otherwise</returns>
+        private string FindTheSimsLegacySteam(int steamAppId = 3314060)
+        {
+            try
+            {
+                return SteamGameLocator.GetGamePath(steamAppId) ?? null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception while finding The Sims: Legacy Collection Steam path: {ex.Message}");
+                return null;
+            }
         }
 
         private static bool is64BitProcess = (IntPtr.Size == 8);

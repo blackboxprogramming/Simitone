@@ -769,6 +769,8 @@ namespace Simitone.Client.UI.Screens
         private UIMobileAlert CloseAlert;
         public override bool CloseAttempt()
         {
+            if (CloseAlert != null) return true;
+
             GameThread.NextUpdate(x =>
             {
                 if (CloseAlert == null)

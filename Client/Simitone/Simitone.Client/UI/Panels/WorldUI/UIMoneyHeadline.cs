@@ -48,7 +48,7 @@ namespace Simitone.Client.UI.Panels.WorldUI
         {
             var GD = GameFacade.GraphicsDevice;
             GD.SetRenderTarget(MoneyTarget);
-            GD.Clear(Color.TransparentBlack);
+            GD.Clear(Color.Transparent);
             var batch = GameFacade.Screens.SpriteBatch;
             var opacity = (Headline.Duration / 60f);
             batch.Begin();
